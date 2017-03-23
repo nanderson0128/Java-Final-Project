@@ -26,14 +26,12 @@ public class Tiles
 					int spriteY = Integer.parseInt(splitString[2]);
 					Tile tile = new Tile(tileName, spriteSheet.getSprite(spriteX, spriteY));
 					tilesList.add(tile);
-					System.out.println("I GET HERE");
 				}
 			}
 		} 
 		catch(FileNotFoundException e)
 		{
 			e.printStackTrace();
-			System.out.println("Errors out");
 		}
 	}
 

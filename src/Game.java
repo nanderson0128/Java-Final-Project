@@ -21,6 +21,8 @@ public class Game extends JFrame implements Runnable{
 	BufferedImage sheetImage1 = loadImage("tiles16x16.png");
 	
 	private Tiles tile;
+	private Map map;
+	
 	private SpriteSheet sheet;
 	private Rectangle testRectangle = new Rectangle(30, 30, 100, 100);
 	
@@ -45,8 +47,14 @@ public class Game extends JFrame implements Runnable{
 		testRectangle.generateGraphics(15, 12234);
 		sheet = new SpriteSheet(sheetImage);
 		sheet.loadSprites(16, 16);
-		File txtFile = new File("Tiles.txt");
+		
+
+		
+		//Load Tiles
+		File txtFile = new File("bin/Tiles.txt");
 		tile = new Tiles(txtFile, sheet);
+		//Load Map 
+		map = new Map(new File("bin/Map.txt"), tile);
 	}
 	
 	public void update(){
@@ -74,10 +82,9 @@ public class Game extends JFrame implements Runnable{
 		BufferStrategy bufferStrategy = canvas.getBufferStrategy();
 		Graphics graphics = bufferStrategy.getDrawGraphics();
 		super.paint(graphics);
-		//renderer.renderSprite(sheet.getSprite(0, 1), 0, 0, 5, 5);
-		renderer.renderRectangle(testRectangle, 1, 1);
+		//renderer.renderRectangle(testRectangle, 1, 1);
 		renderer.render(graphics);
-		tile.renderTile(1, renderer, 0, 0, 3, 3);
+		map.render(renderer, 3, 3);
 		graphics.dispose();
 		bufferStrategy.show();
 	}
