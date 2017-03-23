@@ -8,35 +8,23 @@ import java.lang.Runnable;
 import javax.swing.JFrame;
 import javax.imageio.ImageIO;
 import java.io.IOException;
-
+import java.io.File;
 public class Game extends JFrame implements Runnable{
 	
-	public static int alpha = 0xFFFF00DC;
+	public static int alpha = 0xFFFF00FF;
 	private int FPS = 60;
-	
 	
 	private Canvas canvas = new Canvas();
 	private RenderHandler renderer;
-	BufferedImage treeLeaves = loadImage("grassTile.png");
+	
 	BufferedImage sheetImage = loadImage("spritesheet.png");
+	BufferedImage sheetImage1 = loadImage("tiles16x16.png");
+	
+	private Tiles tile;
 	private SpriteSheet sheet;
 	private Rectangle testRectangle = new Rectangle(30, 30, 100, 100);
 	
-	//SPRITE SHEET SPRITES
-		//Roof
-	private Sprite leftRoof1;
-	private Sprite leftRoof2;
-	private Sprite leftRoof3;
-	private Sprite leftRoof4;
-	private Sprite centerRoofLeft;
-	private Sprite centerRoofRight;
-	private Sprite rightRoof4;
-	private Sprite rightRoof3;
-	private Sprite rightRoof2;
-	private Sprite rightRoof1;
-		//Ground
-	private Sprite grass;
-	private Sprite detailedGrass;
+
 
 	
 	public Game(){
@@ -57,23 +45,8 @@ public class Game extends JFrame implements Runnable{
 		testRectangle.generateGraphics(15, 12234);
 		sheet = new SpriteSheet(sheetImage);
 		sheet.loadSprites(16, 16);
-		
-		//Roof
-		leftRoof1 = sheet.getSprite(0, 0);
-		leftRoof2 = sheet.getSprite(1, 0);
-		leftRoof3 = sheet.getSprite(2, 0);
-		leftRoof4 = sheet.getSprite(3, 0);
-		centerRoofLeft = sheet.getSprite(4, 0);
-		centerRoofRight = sheet.getSprite(5, 0);
-		rightRoof4 = sheet.getSprite(6, 0);
-		rightRoof3 = sheet.getSprite(7, 0);
-		rightRoof2 = sheet.getSprite(8, 0);
-		rightRoof1 = sheet.getSprite(9, 0);
-		//Ground
-		grass = sheet.getSprite(0, 1);
-		detailedGrass = sheet.getSprite(0, 2);
-		
-
+		File txtFile = new File("Tiles.txt");
+		tile = new Tiles(txtFile, sheet);
 	}
 	
 	public void update(){
@@ -94,29 +67,17 @@ public class Game extends JFrame implements Runnable{
 	}
 	
 	
-	public void renderRoof(){
-		renderer.renderSprite(leftRoof1, 0, 0, 5, 5);
-		renderer.renderSprite(leftRoof2, 80, 0, 5, 5);
-		renderer.renderSprite(leftRoof3, 160, 0, 5, 5);
-		renderer.renderSprite(leftRoof4, 240, 0, 5, 5);
-		renderer.renderSprite(centerRoofLeft, 320, 0, 5, 5);
-		renderer.renderSprite(centerRoofRight, 400, 0, 5, 5);
-		renderer.renderSprite(rightRoof4, 480, 0, 5, 5);
-		renderer.renderSprite(rightRoof3, 560, 0, 5, 5);
-		renderer.renderSprite(rightRoof2, 640, 0, 5, 5);
-		renderer.renderSprite(rightRoof1, 720, 0, 5, 5);
-	}
+
 	
 	
 	public void render(){
 		BufferStrategy bufferStrategy = canvas.getBufferStrategy();
 		Graphics graphics = bufferStrategy.getDrawGraphics();
 		super.paint(graphics);
-		renderRoof();
-		//renderer.renderSprite(leftRoof2, 0, 0, 5, 5);
-		//renderer.renderRectangle(testRectangle, 1, 1);
+		//renderer.renderSprite(sheet.getSprite(0, 1), 0, 0, 5, 5);
+		renderer.renderRectangle(testRectangle, 1, 1);
 		renderer.render(graphics);
-		
+		tile.renderTile(1, renderer, 0, 0, 3, 3);
 		graphics.dispose();
 		bufferStrategy.show();
 	}
