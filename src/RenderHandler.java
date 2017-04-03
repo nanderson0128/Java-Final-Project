@@ -55,4 +55,15 @@ public class RenderHandler {
 			renderArray(rectanglePixels, rectangle.w, rectangle.h, rectangle.x, rectangle.y, xZoom, yZoom);
 		}
 	}
+	
+	public Rectangle getCamera(){
+		return camera;
+	}
+	
+	public void clear(){
+		for (int i = 0; i < pixels.length; i++) {
+			pixels[i] = 0;
+		}
+	}
+	
 }

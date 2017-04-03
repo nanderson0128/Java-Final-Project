@@ -1,6 +1,10 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 
@@ -9,12 +13,16 @@ public class Map {
 	private int fillTileID = -1;
 	
 	private ArrayList<MappedTile> mappedTiles = new ArrayList<MappedTile>();
+	private HashMap<Integer, String> comments = new HashMap<Integer, String>();
+	
+	private File mapFile;
 	
 	public Map(File mapFile, Tiles tileSet){
 		this.tileSet = tileSet;
-		
+		this.mapFile = mapFile;
 		try{
 			Scanner scanner = new Scanner(mapFile);
+			int currentLine = 0;
 			while(scanner.hasNextLine()) 
 			{
 				String line = scanner.nextLine();
@@ -35,6 +43,10 @@ public class Map {
 						
 					}
 				}
+				else{
+					comments.put(currentLine, line);
+				}
+				currentLine++;
 			}
 		}
 		catch(FileNotFoundException e){
@@ -42,20 +54,78 @@ public class Map {
 		}
 	}
 	
+	public void setTile(int tileX, int tileY, int tileID){
+		boolean foundTile = false;
+		
+		for (int i = 0; i < mappedTiles.size(); i++) {
+			MappedTile mappedTile = mappedTiles.get(i);
+			if(mappedTile.x == tileX && mappedTile.y == tileY){
+				mappedTile.id = tileID;
+				foundTile = true;
+				break;
+			}
+		}
+		
+		if(!foundTile){
+			mappedTiles.add(new MappedTile(tileID, tileX, tileY));
+		}
+	}
+	
+	public void saveMap(){
+		try {
+			int currentLine = 0;
+			if(mapFile.exists()){
+				mapFile.delete();
+			}
+			mapFile.createNewFile();
+		
+			PrintWriter printWriter = new PrintWriter(mapFile);
+
+
+			
+			if(fillTileID >= 0){
+				if(comments.containsKey(currentLine)){
+					printWriter.println(comments.get(currentLine));
+					currentLine++;
+				}
+				printWriter.println("fill:" + fillTileID);
+			}
+			for (int i = 0; i < mappedTiles.size(); i++) {
+				if(comments.containsKey(currentLine)){
+					printWriter.println(comments.get(currentLine));
+				}
+				MappedTile tile = mappedTiles.get(i);
+				printWriter.println(tile.id + "-" + tile.x + "-" + tile.y);
+				currentLine++;
+			}
+			
+			printWriter.close();
+		} 
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+	}
+	
 	public void render(RenderHandler renderer, int xZoom, int yZoom){
-		int xIncrement = 16 * xZoom;
-		int yIncrement = 16 * yZoom;
+		int tileWidth = 16 * xZoom;
+		int tileHeight = 16 * yZoom;
 		
 		if(fillTileID >= 0){
-			for (int y = 0; y < camera.h; y++) {
-				
+			
+			Rectangle camera = renderer.getCamera();
+			
+			for (int y = camera.y - tileHeight - (camera.y % tileHeight); y < camera.y + camera.h; y+= tileHeight) {
+				for (int x = camera.x - tileWidth - (camera.x % tileWidth); x < camera.x + camera.w; x+= tileWidth) {
+					tileSet.renderTile(fillTileID, renderer, x, y, xZoom, yZoom);
+				}
 			}
 		}
 		
 		for (int tileIndex = 0; tileIndex < mappedTiles.size(); tileIndex++) {
 			MappedTile mappedTile = mappedTiles.get(tileIndex);
-			System.out.println(mappedTile.id + ", " + renderer + ", " + mappedTile.x * xIncrement + ", " + mappedTile.y * yIncrement + ", " +  xZoom + ", " + yZoom);
-			tileSet.renderTile(mappedTile.id, renderer, mappedTile.x * xIncrement, mappedTile.y * yIncrement, xZoom, yZoom);
+			tileSet.renderTile(mappedTile.id, renderer, mappedTile.x * tileWidth, mappedTile.y * tileHeight, xZoom, yZoom);
 			
 		}
 	}

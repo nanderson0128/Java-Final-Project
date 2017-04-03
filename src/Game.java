@@ -1,6 +1,7 @@
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -26,7 +27,14 @@ public class Game extends JFrame implements Runnable{
 	private SpriteSheet sheet;
 	private Rectangle testRectangle = new Rectangle(30, 30, 100, 100);
 	
-
+	private GameObject[] objects;
+	private KeyboardListener keyListener = new KeyboardListener(this); 
+	private MouseEventListener mouseListener = new MouseEventListener(this);
+	
+	private Player player;
+	
+	private int xZoom = 3;
+	private int yZoom = 3;
 
 	
 	public Game(){
@@ -48,16 +56,29 @@ public class Game extends JFrame implements Runnable{
 		sheet = new SpriteSheet(sheetImage);
 		sheet.loadSprites(16, 16);
 		
-
-		
 		//Load Tiles
-		File txtFile = new File("bin/Tiles.txt");
+		File txtFile = new File("Tiles.txt");
 		tile = new Tiles(txtFile, sheet);
 		//Load Map 
-		map = new Map(new File("bin/Map.txt"), tile);
+		map = new Map(new File("Map.txt"), tile);
+		
+		//Load Objects
+		objects = new GameObject[1];
+		player = new Player();
+		objects[0] = player;
+		
+		//Add listeners
+		canvas.addKeyListener(keyListener);
+		canvas.addFocusListener(keyListener);
+		canvas.addMouseListener(mouseListener);
+		canvas.addMouseMotionListener(mouseListener);
 	}
 	
 	public void update(){
+		for (int i = 0; i < objects.length; i++) {
+			objects[i].update(this);
+		}
+		
 	}
 	
 	
@@ -74,7 +95,17 @@ public class Game extends JFrame implements Runnable{
 		}
 	}
 	
+	public void handleCTRL(boolean[] keys){
+		if(keys[KeyEvent.VK_S]){
+			map.saveMap();
+		}
+	}
 	
+	public void leftClick(int x, int y){
+		x = (int)Math.floor((x + renderer.getCamera().x) / (16.0 * xZoom));
+		y = (int)Math.floor((y + renderer.getCamera().y) / (16.0 * yZoom));
+		map.setTile(x, y, 2);
+	}
 
 	
 	
@@ -82,11 +113,19 @@ public class Game extends JFrame implements Runnable{
 		BufferStrategy bufferStrategy = canvas.getBufferStrategy();
 		Graphics graphics = bufferStrategy.getDrawGraphics();
 		super.paint(graphics);
-		//renderer.renderRectangle(testRectangle, 1, 1);
+		
+		map.render(renderer, xZoom, yZoom);
+		for (int i = 0; i < objects.length; i++) {
+			objects[i].render(renderer, xZoom, yZoom);
+		}
+		
 		renderer.render(graphics);
-		map.render(renderer, 3, 3);
+
+		
 		graphics.dispose();
 		bufferStrategy.show();
+		renderer.clear();
+		
 	}
 	
 	@Override
@@ -111,5 +150,17 @@ public class Game extends JFrame implements Runnable{
 		Game game = new Game();
 		Thread gameThread = new Thread(game);
 		gameThread.start();
+	}
+	
+	public KeyboardListener getKeyListener(){
+		return keyListener;
+	}
+	
+	public MouseEventListener getMouseListener(){
+		return mouseListener;
+	}
+	
+	public RenderHandler getRenderer(){
+		return renderer;
 	}
 }
