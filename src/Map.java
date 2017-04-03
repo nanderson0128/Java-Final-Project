@@ -36,7 +36,7 @@ public class Map {
 						}
 					}
 					
-					String[] splitString = line.split("-");
+					String[] splitString = line.split(",");
 					if(splitString.length >= 3){
 						MappedTile mappedTile = new MappedTile(Integer.parseInt(splitString[0]), Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]));
 						mappedTiles.add(mappedTile);
@@ -71,6 +71,15 @@ public class Map {
 		}
 	}
 	
+	public void removeTile(int tileX, int tileY){
+		for (int i = 0; i < mappedTiles.size(); i++) {
+			MappedTile mappedTile = mappedTiles.get(i);
+			if(mappedTile.x == tileX && mappedTile.y == tileY){
+				mappedTiles.remove(i);
+			}
+		}
+	}
+	
 	public void saveMap(){
 		try {
 			int currentLine = 0;
@@ -95,7 +104,7 @@ public class Map {
 					printWriter.println(comments.get(currentLine));
 				}
 				MappedTile tile = mappedTiles.get(i);
-				printWriter.println(tile.id + "-" + tile.x + "-" + tile.y);
+				printWriter.println(tile.id + "," + tile.x + "," + tile.y);
 				currentLine++;
 			}
 			

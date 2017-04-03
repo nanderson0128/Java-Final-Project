@@ -21,10 +21,13 @@ public class Game extends JFrame implements Runnable{
 	BufferedImage sheetImage = loadImage("spritesheet.png");
 	BufferedImage sheetImage1 = loadImage("tiles16x16.png");
 	
+	
 	private Tiles tile;
 	private Map map;
 	
 	private SpriteSheet sheet;
+	private SpriteSheet playerSheet;
+	
 	private Rectangle testRectangle = new Rectangle(30, 30, 100, 100);
 	
 	private GameObject[] objects;
@@ -35,7 +38,8 @@ public class Game extends JFrame implements Runnable{
 	
 	private int xZoom = 3;
 	private int yZoom = 3;
-
+	
+	private AnimatedSprite animTest;
 	
 	public Game(){
 		//When you close window, it stops program
@@ -51,10 +55,14 @@ public class Game extends JFrame implements Runnable{
 		//Creates object for buffering
 		canvas.createBufferStrategy(3);
 		renderer = new RenderHandler(getWidth(), getHeight());
-		
+		//Load Assets
 		testRectangle.generateGraphics(15, 12234);
 		sheet = new SpriteSheet(sheetImage);
 		sheet.loadSprites(16, 16);
+		
+		BufferedImage playerSheetImage = loadImage("player.png");
+		playerSheet = new SpriteSheet(playerSheetImage);
+		playerSheet.loadSprites(20, 26);
 		
 		//Load Tiles
 		File txtFile = new File("Tiles.txt");
@@ -63,9 +71,19 @@ public class Game extends JFrame implements Runnable{
 		map = new Map(new File("Map.txt"), tile);
 		
 		//Load Objects
-		objects = new GameObject[1];
+		objects = new GameObject[2];
 		player = new Player();
 		objects[0] = player;
+		
+		//Testing Animated Sprites
+		Rectangle[] spritePositions = new Rectangle[8];
+		for (int i = 0; i < spritePositions.length; i++) {
+			spritePositions[i] = new Rectangle(i * 20, 0, 20, 26);
+		}
+		animTest = new AnimatedSprite(playerSheet, spritePositions, 7);
+		objects[1] = animTest;
+				
+		
 		
 		//Add listeners
 		canvas.addKeyListener(keyListener);
@@ -106,6 +124,13 @@ public class Game extends JFrame implements Runnable{
 		y = (int)Math.floor((y + renderer.getCamera().y) / (16.0 * yZoom));
 		map.setTile(x, y, 2);
 	}
+	
+	public void rightClick(int x, int y){
+		x = (int)Math.floor((x + renderer.getCamera().x) / (16.0 * xZoom));
+		y = (int)Math.floor((y + renderer.getCamera().y) / (16.0 * yZoom));
+		map.removeTile(x, y);
+	}
+
 
 	
 	
@@ -118,7 +143,7 @@ public class Game extends JFrame implements Runnable{
 		for (int i = 0; i < objects.length; i++) {
 			objects[i].render(renderer, xZoom, yZoom);
 		}
-		
+		renderer.renderSprite(animTest, 0, 0, xZoom, yZoom);
 		renderer.render(graphics);
 
 		
