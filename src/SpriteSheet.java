@@ -49,6 +49,10 @@ import java.awt.image.BufferedImage;
 		
 	}
 	
+	public Sprite[] getLoadedSprites(){
+		return loadedSprites;
+	}
+	
 	public int[] getPixels(){
 		return pixels;
 	}

@@ -39,8 +39,6 @@ public class Game extends JFrame implements Runnable{
 	private int xZoom = 3;
 	private int yZoom = 3;
 	
-	private AnimatedSprite animTest;
-	
 	public Game(){
 		//When you close window, it stops program
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,6 +62,9 @@ public class Game extends JFrame implements Runnable{
 		playerSheet = new SpriteSheet(playerSheetImage);
 		playerSheet.loadSprites(20, 26);
 		
+		//Testing Animated Sprites
+		AnimatedSprite playerAnimations = new AnimatedSprite(playerSheet, 4);
+		
 		//Load Tiles
 		File txtFile = new File("Tiles.txt");
 		tile = new Tiles(txtFile, sheet);
@@ -71,19 +72,11 @@ public class Game extends JFrame implements Runnable{
 		map = new Map(new File("Map.txt"), tile);
 		
 		//Load Objects
-		objects = new GameObject[2];
-		player = new Player();
+		objects = new GameObject[1];
+		player = new Player(playerAnimations);
 		objects[0] = player;
 		
-		//Testing Animated Sprites
-		Rectangle[] spritePositions = new Rectangle[8];
-		for (int i = 0; i < spritePositions.length; i++) {
-			spritePositions[i] = new Rectangle(i * 20, 0, 20, 26);
-		}
-		animTest = new AnimatedSprite(playerSheet, spritePositions, 7);
-		objects[1] = animTest;
-				
-		
+
 		
 		//Add listeners
 		canvas.addKeyListener(keyListener);
@@ -143,7 +136,7 @@ public class Game extends JFrame implements Runnable{
 		for (int i = 0; i < objects.length; i++) {
 			objects[i].render(renderer, xZoom, yZoom);
 		}
-		renderer.renderSprite(animTest, 0, 0, xZoom, yZoom);
+
 		renderer.render(graphics);
 
 		
