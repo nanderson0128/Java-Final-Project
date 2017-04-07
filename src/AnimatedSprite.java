@@ -51,6 +51,10 @@ public class AnimatedSprite extends Sprite implements GameObject{
 	
 	}
 
+	public void handleMouseClick(Rectangle mouseRectangle, int xZoom, int yZoom){
+		
+	}
+	
 	@Override
 	public void update(Game game) {
 		// TODO Auto-generated method stub
@@ -70,6 +74,7 @@ public class AnimatedSprite extends Sprite implements GameObject{
 	public void setAnimationRange(int startSprite, int endSprite){
 		this.startSprite = startSprite;
 		this.endSprite = endSprite;
+		reset();
 	}
 	
 	

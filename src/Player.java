@@ -79,14 +79,22 @@ public class Player implements GameObject{
 			updateDirection();
 		}
 
+		if(!didMove){
+			animatedSprite.reset();
+		}
+		
 		updateCamera(game.getRenderer().getCamera());
 		if(didMove){
 			animatedSprite.update(game);
 		}
+		
 	}
 	
 	public void updateCamera(Rectangle camera){
 		camera.x = playerRectangle.x - (camera.w / 2);
-		camera.y = playerRectangle.y - (camera.h/2);
+		camera.y = playerRectangle.y - (camera.h / 2);
+	}
+	public void handleMouseClick(Rectangle mouseRectangle, int xZoom, int yZoom){
+		
 	}
 }

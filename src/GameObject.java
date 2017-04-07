@@ -7,4 +7,7 @@ public interface GameObject {
 	
 	//Update 60 FPS
 	public void update(Game game);
+	
+	//Call whenever mouse is clicked on canvas.
+	public void handleMouseClick(Rectangle mouseRectangle, int xZoom, int yZoom);
 }

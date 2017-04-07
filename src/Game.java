@@ -115,7 +115,7 @@ public class Game extends JFrame implements Runnable{
 	public void leftClick(int x, int y){
 		x = (int)Math.floor((x + renderer.getCamera().x) / (16.0 * xZoom));
 		y = (int)Math.floor((y + renderer.getCamera().y) / (16.0 * yZoom));
-		map.setTile(x, y, 2);
+		map.setTile(x, y, 6);
 	}
 	
 	public void rightClick(int x, int y){
