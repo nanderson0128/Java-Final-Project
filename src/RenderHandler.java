@@ -20,38 +20,48 @@ public class RenderHandler {
 	}
 	
 	//Renders image to array
-	public void renderImage(BufferedImage image, int xPosition, int yPosition, int xZoom, int yZoom){
+	public void renderImage(BufferedImage image, int xPosition, int yPosition, int xZoom, int yZoom, boolean fixed){
 		int[] imagePixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-		renderArray(imagePixels, image.getWidth(), image.getHeight(), xPosition, yPosition, xZoom, yZoom);
+		renderArray(imagePixels, image.getWidth(), image.getHeight(), xPosition, yPosition, xZoom, yZoom, fixed);
 	}
 	
-	public void renderSprite(Sprite sprite, int xPosition, int yPosition, int xZoom, int yZoom){
-		renderArray(sprite.getPixels(), sprite.getWidth(), sprite.getHeight(), xPosition, yPosition, xZoom, yZoom);
+	public void renderSprite(Sprite sprite, int xPosition, int yPosition, int xZoom, int yZoom, boolean fixed){
+		renderArray(sprite.getPixels(), sprite.getWidth(), sprite.getHeight(), xPosition, yPosition, xZoom, yZoom, fixed);
 	}
 	
-	public void renderArray(int[] renderPixels, int renderWidth, int renderHeight, int xPosition, int yPosition, int xZoom, int yZoom){
+	public void renderArray(int[] renderPixels, int renderWidth, int renderHeight, int xPosition, int yPosition, int xZoom, int yZoom, boolean fixed){
 		for (int y = 0; y < renderHeight; y++) 
 			for (int x = 0; x < renderWidth; x++) 
 				for (int xZoomPosition = 0; xZoomPosition < xZoom; xZoomPosition++) 
 					for (int yZoomPosition = 0; yZoomPosition < yZoom; yZoomPosition++) 
-						setPixel(renderPixels[x + y * renderWidth], (x * xZoom) + xPosition + xZoomPosition, (y * yZoom) + yPosition + yZoomPosition);
+						setPixel(renderPixels[x + y * renderWidth], (x * xZoom) + xPosition + xZoomPosition, (y * yZoom) + yPosition + yZoomPosition, fixed);
 	}
 	
-	private void setPixel(int pixel, int x, int y){
-		if(x >= camera.x && y >= camera.y && x <= camera.x + camera.w && y <= camera.y + camera.h){
+	private void setPixel(int pixel, int x, int y, boolean fixed){
+		int pixelIndex = 0;
+		if(!fixed){
+			if(x >= camera.x && y >= camera.y && x <= camera.x + camera.w && y <= camera.y + camera.h){
 			
-			int pixelIndex = (x - camera.x) + (y - camera.y) * view.getWidth();
+				pixelIndex = (x - camera.x) + (y - camera.y) * view.getWidth();
 			
-			if(pixels.length > pixelIndex && pixel != Game.alpha){
-				pixels[pixelIndex] = pixel;
+
 			}
 		}
+		else{
+			if(x  >= 0 && y  >= 0 && x  <= camera.w && y <= camera.h){
+				pixelIndex = x + y * view.getWidth();
+			}
+		}
+		if(pixels.length > pixelIndex && pixel != Game.alpha){
+			pixels[pixelIndex] = pixel;
+		}
+				
 	}
 	
-	public void renderRectangle(Rectangle rectangle, int xZoom, int yZoom){
+	public void renderRectangle(Rectangle rectangle, int xZoom, int yZoom, boolean fixed){
 		int[] rectanglePixels = rectangle.getPixels();
 		if(rectanglePixels != null){
-			renderArray(rectanglePixels, rectangle.w, rectangle.h, rectangle.x, rectangle.y, xZoom, yZoom);
+			renderArray(rectanglePixels, rectangle.w, rectangle.h, rectangle.x, rectangle.y, xZoom, yZoom, fixed);
 		}
 	}
 	

@@ -39,7 +39,7 @@ public class Tiles
 	{
 		if(tileID >= 0 && tilesList.size() > tileID)
 		{
-			renderer.renderSprite(tilesList.get(tileID).sprite, xPosition, yPosition, xZoom, yZoom);
+			renderer.renderSprite(tilesList.get(tileID).sprite, xPosition, yPosition, xZoom, yZoom, false);
 		}
 		else
 		{

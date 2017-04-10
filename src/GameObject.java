@@ -9,5 +9,5 @@ public interface GameObject {
 	public void update(Game game);
 	
 	//Call whenever mouse is clicked on canvas.
-	public void handleMouseClick(Rectangle mouseRectangle, int xZoom, int yZoom);
+	public void handleMouseClick(Rectangle mouseRectangle, Rectangle camera, int xZoom, int yZoom);
 }

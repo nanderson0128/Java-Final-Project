@@ -28,6 +28,7 @@ public class Game extends JFrame implements Runnable{
 	private SpriteSheet sheet;
 	private SpriteSheet playerSheet;
 	
+	private int selectedTileID = 2;	
 	private Rectangle testRectangle = new Rectangle(30, 30, 100, 100);
 	
 	private GameObject[] objects;
@@ -113,9 +114,16 @@ public class Game extends JFrame implements Runnable{
 	}
 	
 	public void leftClick(int x, int y){
+		Rectangle mouseRectangle = new Rectangle(x, y, 1, 1);
+		for (int i = 0; i < objects.length; i++) {
+			objects[i].handleMouseClick(mouseRectangle, renderer.getCamera(), xZoom, yZoom);
+		}
+		
+		
 		x = (int)Math.floor((x + renderer.getCamera().x) / (16.0 * xZoom));
 		y = (int)Math.floor((y + renderer.getCamera().y) / (16.0 * yZoom));
-		map.setTile(x, y, 6);
+		map.setTile(x, y, selectedTileID);
+
 	}
 	
 	public void rightClick(int x, int y){
@@ -144,6 +152,10 @@ public class Game extends JFrame implements Runnable{
 		bufferStrategy.show();
 		renderer.clear();
 		
+	}
+	
+	public void changeTile(int tileID){
+		selectedTileID = tileID;
 	}
 	
 	@Override

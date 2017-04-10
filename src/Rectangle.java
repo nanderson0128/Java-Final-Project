@@ -22,6 +22,17 @@ public class Rectangle {
 		}
 	}
 	
+	public boolean intersects(Rectangle otherRectangle){
+		if(x > otherRectangle.x + otherRectangle.w || otherRectangle.x > x + w){
+			return false;
+		}
+		if(y > otherRectangle.y + otherRectangle.h || otherRectangle.y > y + h){
+			return false;
+		}
+		
+		return true;
+}
+	
 	public void generateGraphics(int borderWidth, int color){
 		pixels = new int[w*h];
 		for (int i = 0; i < pixels.length; i++) {

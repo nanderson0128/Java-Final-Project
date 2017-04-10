@@ -34,13 +34,13 @@ public class Player implements GameObject{
 		// TODO Auto-generated method stub
 
 		if(animatedSprite != null){
-				renderer.renderSprite(animatedSprite, playerRectangle.x, playerRectangle.y, xZoom, yZoom);
+				renderer.renderSprite(animatedSprite, playerRectangle.x, playerRectangle.y, xZoom, yZoom, false);
 		}
 		else if (sprite != null){
-			renderer.renderSprite(sprite, playerRectangle.x, playerRectangle.y, xZoom, yZoom);
+			renderer.renderSprite(sprite, playerRectangle.x, playerRectangle.y, xZoom, yZoom, false);
 		}
 		else{
-			renderer.renderRectangle(playerRectangle, xZoom, yZoom);
+			renderer.renderRectangle(playerRectangle, xZoom, yZoom, false);
 		}
 	}
 
@@ -49,28 +49,37 @@ public class Player implements GameObject{
 		// TODO Auto-generated method stub
 		KeyboardListener keyListener = game.getKeyListener();
 		
+		int recentKey = -1;
 		boolean didMove = false;
 		int newDirection = direction;
 		
-		if(keyListener.left()){
+		if(keyListener.left() && !keyListener.right() && !keyListener.up() && !keyListener.down()){
 			playerRectangle.x -= speed;
 			newDirection = 1;
 			didMove = true;
+			recentKey = 1;
+			System.out.println(recentKey);
 		}
-		if(keyListener.right()){
+		if(keyListener.right() && !keyListener.up() && !keyListener.down()){
 			playerRectangle.x += speed;
 			newDirection = 0;
 			didMove = true;	
+			recentKey = 0;
+			System.out.println(recentKey);
 		}
-		if(keyListener.up()){
+		if(keyListener.up() && !keyListener.down()){
 			playerRectangle.y -= speed;
 			newDirection = 2;
 			didMove = true;
+			recentKey = 2;
+			System.out.println(recentKey);
 		}
 		if(keyListener.down()){
 			playerRectangle.y += speed;
 			newDirection = 3;
 			didMove = true;
+			recentKey = 3;
+			System.out.println(recentKey);
 		}
 		
 		
@@ -94,7 +103,7 @@ public class Player implements GameObject{
 		camera.x = playerRectangle.x - (camera.w / 2);
 		camera.y = playerRectangle.y - (camera.h / 2);
 	}
-	public void handleMouseClick(Rectangle mouseRectangle, int xZoom, int yZoom){
+	public void handleMouseClick(Rectangle mouseRectangle, Rectangle camera, int xZoom, int yZoom){
 		
 	}
 }
