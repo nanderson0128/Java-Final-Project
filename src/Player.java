@@ -8,6 +8,7 @@ public class Player implements GameObject{
 	private int direction = 0;
 	private Sprite sprite;
 	private AnimatedSprite animatedSprite = null;
+	private int mostRecentKey = -1;
 
 	
 	public Player(Sprite sprite){
@@ -48,40 +49,35 @@ public class Player implements GameObject{
 	public void update(Game game) {
 		// TODO Auto-generated method stub
 		KeyboardListener keyListener = game.getKeyListener();
-		
-		int recentKey = -1;
+		mostRecentKey = keyListener.getRecentKey();
 		boolean didMove = false;
 		int newDirection = direction;
 		
-		if(keyListener.left() && !keyListener.right() && !keyListener.up() && !keyListener.down()){
-			playerRectangle.x -= speed;
-			newDirection = 1;
-			didMove = true;
-			recentKey = 1;
-			System.out.println(recentKey);
-		}
-		if(keyListener.right() && !keyListener.up() && !keyListener.down()){
+		
+		if(keyListener.right() && mostRecentKey == 0){
 			playerRectangle.x += speed;
 			newDirection = 0;
 			didMove = true;	
-			recentKey = 0;
-			System.out.println(recentKey);
 		}
-		if(keyListener.up() && !keyListener.down()){
+		
+		if(keyListener.left() && mostRecentKey == 1){
+			playerRectangle.x -= speed;
+			newDirection = 1;
+			didMove = true;
+		}
+
+		if(keyListener.up() && mostRecentKey == 2){
 			playerRectangle.y -= speed;
 			newDirection = 2;
 			didMove = true;
-			recentKey = 2;
-			System.out.println(recentKey);
 		}
-		if(keyListener.down()){
+		
+		if(keyListener.down() && mostRecentKey == 3){
 			playerRectangle.y += speed;
 			newDirection = 3;
 			didMove = true;
-			recentKey = 3;
-			System.out.println(recentKey);
 		}
-		
+
 		
 		if(newDirection != direction){
 			direction = newDirection;
@@ -106,4 +102,5 @@ public class Player implements GameObject{
 	public void handleMouseClick(Rectangle mouseRectangle, Rectangle camera, int xZoom, int yZoom){
 		
 	}
+
 }

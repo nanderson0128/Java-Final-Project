@@ -19,7 +19,7 @@ public class Game extends JFrame implements Runnable{
 	private RenderHandler renderer;
 	
 	BufferedImage sheetImage = loadImage("spritesheet.png");
-	BufferedImage sheetImage1 = loadImage("tiles16x16.png");
+	//BufferedImage sheetImage1 = loadImage("tiles16x16.png");
 	
 	
 	private Tiles tile;
