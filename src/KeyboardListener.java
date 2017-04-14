@@ -10,7 +10,8 @@ public class KeyboardListener implements KeyListener, FocusListener{
 	
 	private Game game;
 
-	private int mostRecentKey;
+	private int[] mostRecentKey;
+
 	
 	public KeyboardListener(Game game){
 		this.game = game;
@@ -20,8 +21,7 @@ public class KeyboardListener implements KeyListener, FocusListener{
 	public void keyPressed(KeyEvent event) {
 		// TODO Auto-generated method stub
 		int keyCode = event.getKeyCode();
-		mostRecentKey = -1;
-		
+		mostRecentKey = new int[4];
 		if(keyCode < keys.length){
 			keys[keyCode] = true;
 		}
@@ -33,55 +33,36 @@ public class KeyboardListener implements KeyListener, FocusListener{
 		
 		
 		if(keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]){
-			mostRecentKey = 0;
-			if(keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT]){
-				mostRecentKey = 1;
+			if(mostRecentKey[0] == 0){
+				if(mostRecentKey[1] == 0 && mostRecentKey[2] == 0 && mostRecentKey[3] == 0){
+					mostRecentKey[0] = 1;
+				}
+				if(mostRecentKey[1] == 1){
+					mostRecentKey[0] = 1;
+					mostRecentKey[1] = 2;
+				}
+				if(mostRecentKey[2] == 1){
+					mostRecentKey[0] = 1;
+					mostRecentKey[2] = 2;
+				}
+				if(mostRecentKey[3] == 1){
+					mostRecentKey[0] = 1;
+					mostRecentKey[3] = 2;
+				}
+					
 			}
-			if(keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP]){
-				mostRecentKey = 2;
-			}
-			if(keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN]){
-				mostRecentKey = 3;
-			}
+
 		}
 		if(keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT]){
-			mostRecentKey = 1;
-			if(keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]){
-				mostRecentKey = 0;
-			}
-			if(keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP]){
-				mostRecentKey = 2;
-			}
-			if(keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN]){
-				mostRecentKey = 3;
-			}
+			
+
 		}
 		if(keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP]){
-			mostRecentKey = 2;
-			if(keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT]){
-				mostRecentKey = 1;
-			}
-			if(keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]){
-				mostRecentKey = 2;
-			}
-			if(keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN]){
-				mostRecentKey = 3;
-			}
+
 		}
 		if(keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN]){
-			mostRecentKey = 3;
-			if(keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT]){
-				mostRecentKey = 1;
-			}
-			if(keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP]){
-				mostRecentKey = 2;
-			}
-			if(keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]){
-				mostRecentKey = 3;
-			}
+		
 		}
-		
-		
 		
 	}
 
@@ -96,49 +77,49 @@ public class KeyboardListener implements KeyListener, FocusListener{
 		
 		if(event.getKeyCode() == 68 || event.getKeyCode() == 39){
 			if(keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT]){
-				mostRecentKey = 1;
+
 			}
 			if(keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP]){
-				mostRecentKey = 2;
+
 			}
 			if(keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN]){
-				mostRecentKey = 3;
+
 			}
 		}
 		
 		if(event.getKeyCode() == 65 || event.getKeyCode() == 37){
 			if(keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]){
-				mostRecentKey = 0;
+
 			}
 			if(keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP]){
-				mostRecentKey = 2;
+
 			}
 			if(keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN]){
-				mostRecentKey = 3;
+
 			}
 		}
 	
 		if(event.getKeyCode() == 87 || event.getKeyCode() == 38){
 			if(keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]){
-				mostRecentKey = 0;
+
 			}
 			if(keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT]){
-				mostRecentKey = 1;
+
 			}
 			if(keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN]){
-				mostRecentKey = 3;
+
 			}
 		}
 		
 		if(event.getKeyCode() == 83 || event.getKeyCode() == 40){
 			if(keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]){
-				mostRecentKey = 0;
+
 			}
 			if(keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT]){
-				mostRecentKey = 1;
+
 			}
 			if(keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP]){
-				mostRecentKey = 2;
+
 			}
 		}
 
@@ -179,7 +160,7 @@ public class KeyboardListener implements KeyListener, FocusListener{
 		return keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT];
 	}
 	
-	public int getRecentKey(){
+	public int[] getRecentKey(){
 		return mostRecentKey;
 	}
 

@@ -8,7 +8,7 @@ public class Player implements GameObject{
 	private int direction = 0;
 	private Sprite sprite;
 	private AnimatedSprite animatedSprite = null;
-	private int mostRecentKey = -1;
+	private int[] mostRecentKey = new int[4];
 
 	
 	public Player(Sprite sprite){
@@ -54,30 +54,30 @@ public class Player implements GameObject{
 		int newDirection = direction;
 		
 		
-		if(keyListener.right() && mostRecentKey == 0){
+		if(keyListener.right()){
 			playerRectangle.x += speed;
 			newDirection = 0;
 			didMove = true;	
 		}
 		
-		if(keyListener.left() && mostRecentKey == 1){
+		if(keyListener.left()){
 			playerRectangle.x -= speed;
 			newDirection = 1;
 			didMove = true;
 		}
 
-		if(keyListener.up() && mostRecentKey == 2){
+		if(keyListener.up()){
 			playerRectangle.y -= speed;
 			newDirection = 2;
 			didMove = true;
 		}
 		
-		if(keyListener.down() && mostRecentKey == 3){
+		if(keyListener.down()){
 			playerRectangle.y += speed;
 			newDirection = 3;
 			didMove = true;
 		}
-
+		//System.out.println(mostRecentKey);
 		
 		if(newDirection != direction){
 			direction = newDirection;
