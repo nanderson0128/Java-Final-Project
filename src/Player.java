@@ -54,25 +54,25 @@ public class Player implements GameObject{
 		int newDirection = direction;
 		
 		
-		if(keyListener.right()){
+		if(keyListener.right() && mostRecentKey[0] == 1){
 			playerRectangle.x += speed;
 			newDirection = 0;
 			didMove = true;	
 		}
 		
-		if(keyListener.left()){
+		if(keyListener.left() && mostRecentKey[1] == 1){
 			playerRectangle.x -= speed;
 			newDirection = 1;
 			didMove = true;
 		}
 
-		if(keyListener.up()){
+		if(keyListener.up() && mostRecentKey[2] == 1){
 			playerRectangle.y -= speed;
 			newDirection = 2;
 			didMove = true;
 		}
 		
-		if(keyListener.down()){
+		if(keyListener.down() && mostRecentKey[3] == 1){
 			playerRectangle.y += speed;
 			newDirection = 3;
 			didMove = true;

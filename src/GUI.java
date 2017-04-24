@@ -3,7 +3,7 @@ public class GUI implements GameObject{
 
 	private Sprite backgroundSprite;
 	private GUIButton[] buttons;
-	private Rectangle rect;
+	private Rectangle rect = new Rectangle();
 	private boolean fixed;
 	
 	public GUI(Sprite backgroundSprite, GUIButton[] buttons, int x, int y, boolean fixed){
@@ -13,7 +13,7 @@ public class GUI implements GameObject{
 		
 		rect.x = x;
 		rect.y = y;
-		
+				
 		if(backgroundSprite != null){
 			rect.w = backgroundSprite.getWidth();
 			rect.h = backgroundSprite.getHeight();
@@ -24,6 +24,7 @@ public class GUI implements GameObject{
 	public GUI(GUIButton[] buttons, int x, int y, boolean fixed){
 		
 		this(null, buttons, x, y, fixed);
+		
 	}
 	@Override
 	public void render(RenderHandler renderer, int xZoom, int yZoom) {

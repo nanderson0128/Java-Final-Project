@@ -13,8 +13,11 @@ public abstract class GUIButton implements GameObject{
 
 	@Override
 	public void render(RenderHandler renderer, int xZoom, int yZoom) {
-		// TODO Auto-generated method stub
-		renderer.renderSprite(sprite, rect.x, rect.y, xZoom, yZoom, fixed);
+
+	}
+	
+	public void render(RenderHandler renderer, int xZoom, int yZoom, Rectangle interfaceRect){
+		renderer.renderSprite(sprite, rect.x + interfaceRect.x, rect.y + interfaceRect.y, xZoom, yZoom, fixed);
 	}
 
 	@Override

@@ -72,10 +72,22 @@ public class Game extends JFrame implements Runnable{
 		//Load Map 
 		map = new Map(new File("Map.txt"), tile);
 		
+		//Load SDK GUI
+		GUIButton[] buttons = new GUIButton[tile.size()];
+		Sprite[] tilesSprites = tile.getSprites();
+		
+		for (int i = 0; i < buttons.length; i++) {
+			Rectangle tileRectangle = new Rectangle(0, i*(16 * xZoom), 16, 16);
+			buttons[i] = new SDKButton(tilesSprites[i], tileRectangle);
+		}
+		
+		GUI gui = new GUI(buttons, 10, 10, true); 
+		
 		//Load Objects
-		objects = new GameObject[1];
+		objects = new GameObject[2];
 		player = new Player(playerAnimations);
 		objects[0] = player;
+		objects[1] = gui;
 		
 
 		
