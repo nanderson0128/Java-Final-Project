@@ -34,7 +34,7 @@ public class GUI implements GameObject{
 		}
 		if(buttons != null){
 			for (int i = 0; i < buttons.length; i++) {
-				buttons[i].render(renderer, xZoom, yZoom);
+				buttons[i].render(renderer, xZoom, yZoom, rect);
 			}
 		}
 	}

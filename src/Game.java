@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.File;
 public class Game extends JFrame implements Runnable{
 	
-	public static int alpha = 0xFFFF00FF;
+	public static final int alpha = 0xFFFF00FF;
 	private int FPS = 60;
 	
 	private Canvas canvas = new Canvas();
@@ -77,11 +77,11 @@ public class Game extends JFrame implements Runnable{
 		Sprite[] tilesSprites = tile.getSprites();
 		
 		for (int i = 0; i < buttons.length; i++) {
-			Rectangle tileRectangle = new Rectangle(0, i*(16 * xZoom), 16, 16);
+			Rectangle tileRectangle = new Rectangle(0, i*(16 * xZoom + 3), 16, 16);
 			buttons[i] = new SDKButton(tilesSprites[i], tileRectangle);
 		}
 		
-		GUI gui = new GUI(buttons, 10, 10, true); 
+		GUI gui = new GUI(buttons, 5, 5, true); 
 		
 		//Load Objects
 		objects = new GameObject[2];
@@ -172,7 +172,6 @@ public class Game extends JFrame implements Runnable{
 	
 	@Override
 	public void run() {
-		BufferStrategy bufferStrategy = canvas.getBufferStrategy();
 		long lastTime = System.nanoTime();
 		double nanoSecondConversion = 1000000000 / FPS;
 		double 	changeInSeconds = 0;

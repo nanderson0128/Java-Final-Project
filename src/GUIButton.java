@@ -29,6 +29,8 @@ public abstract class GUIButton implements GameObject{
 	@Override
 	public void handleMouseClick(Rectangle mouseRectangle, Rectangle camera, int xZoom, int yZoom) {
 		// TODO Auto-generated method stub
+		System.out.println("Mouse:" + mouseRectangle);
+		System.out.println("Button: " + rect);
 		if(mouseRectangle.intersects(rect)){
 			activate();
 		}
