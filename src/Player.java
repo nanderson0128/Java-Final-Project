@@ -99,8 +99,8 @@ public class Player implements GameObject{
 		camera.x = playerRectangle.x - (camera.w / 2);
 		camera.y = playerRectangle.y - (camera.h / 2);
 	}
-	public void handleMouseClick(Rectangle mouseRectangle, Rectangle camera, int xZoom, int yZoom){
-		
+	public boolean handleMouseClick(Rectangle mouseRectangle, Rectangle camera, int xZoom, int yZoom){
+		return false;
 	}
 
 }

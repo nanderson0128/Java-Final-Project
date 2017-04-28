@@ -76,6 +76,6 @@ public class Rectangle {
 		}		
 	}
 	public String toString(){
-		return "[" + x + ", " + y +", " + ", " + w +", " + h + "]";
+		return "[" + x + ", " + y + ", " + w +", " + h + "]";
 	}
 }

@@ -50,18 +50,23 @@ public class GUI implements GameObject{
 	}
 
 	@Override
-	public void handleMouseClick(Rectangle mouseRectangle, Rectangle camera, int xZoom, int yZoom) {
+	public boolean handleMouseClick(Rectangle mouseRectangle, Rectangle camera, int xZoom, int yZoom) {
 		// TODO Auto-generated method stub
+		boolean stopChecking = false;
 		if(!fixed){
 			mouseRectangle = new Rectangle(mouseRectangle.x + camera.x, mouseRectangle.y + camera.y, 1, 1);	
 		}
 			
 		if(rect.w == 0 || rect.h == 0 || mouseRectangle.intersects(rect)){
+			mouseRectangle.x -= rect.x;
+			mouseRectangle.y -= rect.y;
 			for (int i = 0; i < buttons.length; i++) {
-				mouseRectangle.x += rect.x;
-				mouseRectangle.y += rect.y;
-				buttons[i].handleMouseClick(mouseRectangle, camera, xZoom, yZoom);	
+				boolean result = buttons[i].handleMouseClick(mouseRectangle, camera, xZoom, yZoom);	
+				if(stopChecking == false){
+					stopChecking = result;
+				}
 			}
 		 }
+		return stopChecking;
 	}
 }
