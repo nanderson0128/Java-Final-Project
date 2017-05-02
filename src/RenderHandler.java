@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.GraphicsDevice;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 public class RenderHandler {
@@ -6,17 +7,36 @@ public class RenderHandler {
 	private BufferedImage view;
 	private Rectangle camera;
 	private int[] pixels;
-	
+	private int maxScreenWidth, maxScreenHeight;
+
 	public RenderHandler(int width, int height){
+		
+		GraphicsDevice[] graphicsDevices = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
+		
+		
+
+		for (int i = 0; i < graphicsDevices.length; i++) {
+			if(maxScreenWidth < graphicsDevices[i].getDisplayMode().getWidth()){
+				maxScreenWidth = graphicsDevices[i].getDisplayMode().getWidth();
+			}
+			if(maxScreenHeight < graphicsDevices[i].getDisplayMode().getHeight()){
+				maxScreenHeight = graphicsDevices[i].getDisplayMode().getHeight();
+			}
+		}
+		
 		//Create a BufferedImage that will represent our view
-		view = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		view = new BufferedImage(maxScreenWidth, maxScreenHeight, BufferedImage.TYPE_INT_RGB);
+		
+		
 		camera = new Rectangle(0, 0, width, height);
+		
+		
 		pixels = ((DataBufferInt) view.getRaster().getDataBuffer()).getData();	
 	}
 	
 	//Renders pixel array to screen
 	public void render(Graphics graphics){
-		graphics.drawImage(view, 0, 0, view.getWidth(), view.getHeight(), null);
+		graphics.drawImage(view.getSubimage(0, 0, camera.w, camera.h), 0, 0, camera.w, camera.h, null);
 	}
 	
 	//Renders image to array
@@ -76,6 +96,14 @@ public class RenderHandler {
 	
 	public Rectangle getCamera(){
 		return camera;
+	}
+	
+	public int getMaxWidth(){
+		return maxScreenWidth;
+	}
+	
+	public int getMaxHeight(){
+		return maxScreenHeight;
 	}
 	
 	public void clear(){

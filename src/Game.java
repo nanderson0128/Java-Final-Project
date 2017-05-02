@@ -1,4 +1,6 @@
 import java.awt.Canvas;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -98,6 +100,52 @@ public class Game extends JFrame implements Runnable{
 		canvas.addFocusListener(keyListener);
 		canvas.addMouseListener(mouseListener);
 		canvas.addMouseMotionListener(mouseListener);
+		
+		addComponentListener(new ComponentListener(){
+
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentResized(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				int newWidth = canvas.getWidth();
+				int newHeight = canvas.getHeight();
+				
+				
+				if(newWidth > renderer.getMaxWidth()){
+					newWidth = renderer.getMaxWidth();
+				}
+				
+				if(newHeight > renderer.getMaxHeight()){
+					newHeight = renderer.getMaxHeight();
+				}
+				
+				renderer.getCamera().w = newWidth;
+				renderer.getCamera().h = newHeight;
+				
+				canvas.setSize(newWidth, newHeight);
+				pack();
+					
+				
+			}
+
+			@Override
+			public void componentShown(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 	
 	public void update(){
