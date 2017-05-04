@@ -135,7 +135,6 @@ public class Game extends JFrame implements Runnable{
 				
 				canvas.setSize(newWidth, newHeight);
 				pack();
-					
 				
 			}
 
