@@ -15,10 +15,10 @@ public class Map {
 	private ArrayList<MappedTile> mappedTiles = new ArrayList<MappedTile>();
 	private Block [][] blocks;
 	private int blockStartX, blockStartY = 0;
-	private int gridWidth = 6;
-	private int gridHeight = 6;
-	private int blockPixelWidth = gridWidth * 16;
-	private int blockPixelHeight = gridHeight * 16;
+	private int blockWidth = 6;
+	private int blockHeight = 6;
+	private int blockPixelWidth = blockWidth * 16;
+	private int blockPixelHeight = blockHeight * 16;
 	private HashMap<Integer, String> comments = new HashMap<Integer, String>();
 	
 	private File mapFile;
@@ -59,7 +59,7 @@ public class Map {
 					if(maxX < mappedTile.x){
 						maxX = mappedTile.x;
 					}
-					if(maxY > mappedTile.y){
+					if(maxY < mappedTile.y){
 						maxY = mappedTile.y;
 					}
 					
@@ -75,15 +75,15 @@ public class Map {
 		blockStartX = minX;
 		blockStartY = minY;
 		
-		int blockSizeX = (maxX + gridWidth) - minX;
-		int blockSizeY = (maxY + gridHeight)- minY;
+		int blockSizeX = (maxX + blockWidth) - minX;
+		int blockSizeY = (maxY + blockHeight) - minY;
 		blocks = new Block [blockSizeX][blockSizeY];
 		//Loop through all mapped tiles in entire level and save and add them to a block.
 		for (int i = 0; i < mappedTiles.size(); i++) {
 			MappedTile mappedTile = mappedTiles.get(i);
 			
-			int blockX = (mappedTile.x - minX) / gridWidth;
-			int blockY = (mappedTile.y - minY) / gridHeight;
+			int blockX = (mappedTile.x - minX) / blockWidth;
+			int blockY = (mappedTile.y - minY) / blockHeight;
 			
 			assert(blockX >= 0 && blockX < blocks.length && blockY >= 0 && blockY < blocks[0].length);
 			if(blocks[blockX][blockY] == null){
@@ -98,23 +98,83 @@ public class Map {
 		e.printStackTrace();
 	}
 }
+	
+	
+	
+	
+	
+	
+	
 
 	
 	public void setTile(int tileX, int tileY, int tileID){
-		boolean foundTile = false;
+		
+
 		
 		for (int i = 0; i < mappedTiles.size(); i++) {
 			MappedTile mappedTile = mappedTiles.get(i);
 			if(mappedTile.x == tileX && mappedTile.y == tileY){
 				mappedTile.id = tileID;
-				foundTile = true;
-				break;
+				return;
 			}
 		}
 		
-		if(!foundTile){
-			mappedTiles.add(new MappedTile(tileID, tileX, tileY));
-		}
+
+			MappedTile mappedTile = new MappedTile(tileID, tileX, tileY);
+			mappedTiles.add(mappedTile);
+			
+			//Add to blocks
+			int blockX = (tileX - blockStartX) / blockWidth;
+			int blockY = (tileY - blockStartY) / blockHeight;
+			
+			if(blockX >= 0 && blockY >= 0 && blockX < blocks.length && blockY < blocks[0].length){
+ 
+			}
+			else{
+				int newMinX = blockStartX;
+				int newMinY = blockStartY;
+				int newLengthX = blocks.length;
+				int newLengthY = blocks[0].length;
+				
+				if(blockX < 0){
+					newMinX = blockStartX - blockWidth*((int) Math.ceil(blockX * -1.0/blockWidth));
+					newLengthX = newLengthX + (blockStartX - newMinX);
+				} else if(blockX >= blocks.length){
+					newLengthX = blocks.length + ((int) Math.ceil(blockX * 1.0/blockWidth));
+				}
+				
+				if(blockY < 0){
+					newMinY = blockStartY - blockHeight*((int) Math.ceil(blockY * -1.0/blockHeight));
+					newLengthY = newLengthY + (blockStartY - newMinY);
+				} else if(blockY >= blocks[0].length){
+					newLengthY = blocks[0].length + ((int) Math.ceil(blockY * 1.0/blockHeight));
+				}
+				
+				
+				Block[][] newBlocks = new Block[newLengthX][newLengthY];
+				
+				for (int x = 0; x < blocks.length; x++) {
+					for (int y = 0; y < blocks[0].length; y++) {
+						if(blocks[x][y] != null){
+							newBlocks[x + blockStartX - newMinX][y + blockStartY - newMinY] = blocks[x][y];
+						}
+					}
+				}
+				
+				blocks = newBlocks;
+				blockStartX = newMinX;
+				blockStartY = newMinY;
+				blockX = (tileX - blockStartX) / blockWidth;
+				blockY = (tileY - blockStartY) / blockHeight;
+				if(blocks[blockX][blockY] == null){
+					blocks[blockX][blockY] = new Block();
+				}
+				blocks[blockX][blockY].mappedTiles.add(mappedTile);
+			}
+
+		
+
+
 	}
 	
 	public void removeTile(int tileX, int tileY){
@@ -122,9 +182,30 @@ public class Map {
 			MappedTile mappedTile = mappedTiles.get(i);
 			if(mappedTile.x == tileX && mappedTile.y == tileY){
 				mappedTiles.remove(i);
+				//Remove from block
+				int blockX = (tileX - blockStartX) / blockWidth;
+				int blockY = (tileY - blockStartY) / blockHeight;
+			
+				assert(blockX >= 0 && blockY >= 0 && blockX < blocks.length && blockY < blocks[0].length);
+				blocks[blockX][blockY].mappedTiles.remove(mappedTile);
+					
+				
+				
+				
 			}
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public void saveMap(){
 		try {
@@ -184,9 +265,9 @@ public class Map {
 		int bottomRightY = renderer.getCamera().y + renderer.getCamera().w;
 		
 		
-		int leftBlockX = (topLeftX - blockStartX)/gridWidth;
-		int blockX = (topLeftX - blockStartX)/gridWidth;
-		int blockY = (topLeftY - blockStartY)/gridHeight;
+		int leftBlockX = (topLeftX/tileWidth - blockStartX - 16)/blockWidth;
+		int blockX = leftBlockX;
+		int blockY = (topLeftY/tileHeight - blockStartY - 16)/blockHeight;
 		
 		int	pixelX = topLeftX;
 		int pixelY = topLeftY;
@@ -198,11 +279,10 @@ public class Map {
 				}
 			}
 			
-			
-			
-
 			blockX++;
 			pixelX += blockPixelWidth;
+			
+			
 			if(pixelX > bottomRightX){
 				pixelX = topLeftX;
 				blockX = leftBlockX;
@@ -255,6 +335,8 @@ public class Map {
 			
 			}
 		}
+		
+		
 	}
 	
 	
