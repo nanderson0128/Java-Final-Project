@@ -34,5 +34,10 @@ public abstract class GUIButton implements GameObject{
 	}
 	
 	public abstract void activate();
+	
+	
+	public int getLayer(){
+		return Integer.MAX_VALUE;
+	}
 
 }

@@ -95,4 +95,11 @@ public class AnimatedSprite extends Sprite implements GameObject{
 		}
 	}
 
+	@Override
+	public int getLayer() {
+		// TODO Auto-generated method stub
+		
+		return -1;
+	}
+
 }

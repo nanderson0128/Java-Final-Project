@@ -103,4 +103,10 @@ public class Player implements GameObject{
 		return false;
 	}
 
+	@Override
+	public int getLayer() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

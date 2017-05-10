@@ -31,6 +31,8 @@ public class Game extends JFrame implements Runnable{
 	private SpriteSheet playerSheet;
 	
 	private int selectedTileID = 2;	
+	private int selectedLayer = 1;
+	
 	private Rectangle testRectangle = new Rectangle(30, 30, 100, 100);
 	
 	private GameObject[] objects;
@@ -145,6 +147,7 @@ public class Game extends JFrame implements Runnable{
 			}
 			
 		});
+		canvas.requestFocus();
 	}
 	
 	public void update(){
@@ -186,7 +189,7 @@ public class Game extends JFrame implements Runnable{
 		if(!stopChecking){
 			x = (int)Math.floor((x + renderer.getCamera().x) / (16.0 * xZoom));
 			y = (int)Math.floor((y + renderer.getCamera().y) / (16.0 * yZoom));
-			map.setTile(x, y, selectedTileID);
+			map.setTile(selectedLayer, x, y, selectedTileID);
 		}
 
 	}
@@ -194,7 +197,7 @@ public class Game extends JFrame implements Runnable{
 	public void rightClick(int x, int y){
 		x = (int)Math.floor((x + renderer.getCamera().x) / (16.0 * xZoom));
 		y = (int)Math.floor((y + renderer.getCamera().y) / (16.0 * yZoom));
-		map.removeTile(x, y);
+		map.removeTile(selectedLayer, x, y);
 	}
 
 
@@ -205,10 +208,10 @@ public class Game extends JFrame implements Runnable{
 		Graphics graphics = bufferStrategy.getDrawGraphics();
 		super.paint(graphics);
 		
-		map.render(renderer, xZoom, yZoom);
-		for (int i = 0; i < objects.length; i++) {
-			objects[i].render(renderer, xZoom, yZoom);
-		}
+		map.render(renderer, objects, xZoom, yZoom);
+//		for (int i = 0; i < objects.length; i++) {
+//			objects[i].render(renderer, xZoom, yZoom);
+//		}
 
 		renderer.render(graphics);
 

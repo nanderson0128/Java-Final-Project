@@ -69,4 +69,10 @@ public class GUI implements GameObject{
 		 }
 		return stopChecking;
 	}
+
+	@Override
+	public int getLayer() {
+		// TODO Auto-generated method stub
+		return Integer.MAX_VALUE;
+	}
 }
