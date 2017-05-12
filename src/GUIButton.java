@@ -39,5 +39,9 @@ public abstract class GUIButton implements GameObject{
 	public int getLayer(){
 		return Integer.MAX_VALUE;
 	}
+	
+	public Rectangle getRectangle(){
+		return rect;
+	}
 
 }

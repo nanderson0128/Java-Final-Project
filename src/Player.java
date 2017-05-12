@@ -1,11 +1,15 @@
 
 public class Player implements GameObject{
 
-	Rectangle playerRectangle;
+	private Rectangle playerRectangle;
+	private Rectangle collisionCheckRectangle;
+	
 	private int speed = 8;
 
 	//0 = Right, 1 = Left, 2 = Up, 3 = Down
 	private int direction = 0;
+	private int layer = 0;
+	
 	private Sprite sprite;
 	private AnimatedSprite animatedSprite = null;
 	private int[] mostRecentKey = new int[4];
@@ -18,9 +22,11 @@ public class Player implements GameObject{
 		}
 		
 		updateDirection();
-		playerRectangle = new Rectangle(32, 16, 16, 32);
+		playerRectangle = new Rectangle(0, 0, 20, 26);
 		playerRectangle.generateGraphics(3, 0xFF00FF90);
+		collisionCheckRectangle = new Rectangle(0, 0, 20, 26);
 	}
+	
 	
 	private void updateDirection(){
 		if(animatedSprite != null)
@@ -53,27 +59,29 @@ public class Player implements GameObject{
 		boolean didMove = false;
 		int newDirection = direction;
 		
+		collisionCheckRectangle.x = playerRectangle.x;
+		collisionCheckRectangle.y = playerRectangle.y;
 		
 		if(keyListener.right() && mostRecentKey[0] == 1){
-			playerRectangle.x += speed;
+			collisionCheckRectangle.x += speed;
 			newDirection = 0;
 			didMove = true;	
 		}
 		
 		if(keyListener.left() && mostRecentKey[1] == 1){
-			playerRectangle.x -= speed;
+			collisionCheckRectangle.x -= speed;
 			newDirection = 1;
 			didMove = true;
 		}
 
 		if(keyListener.up() && mostRecentKey[2] == 1){
-			playerRectangle.y -= speed;
+			collisionCheckRectangle.y -= speed;
 			newDirection = 2;
 			didMove = true;
 		}
 		
 		if(keyListener.down() && mostRecentKey[3] == 1){
-			playerRectangle.y += speed;
+			collisionCheckRectangle.y += speed;
 			newDirection = 3;
 			didMove = true;
 		}
@@ -88,10 +96,18 @@ public class Player implements GameObject{
 			animatedSprite.reset();
 		}
 		
-		updateCamera(game.getRenderer().getCamera());
+
+		
 		if(didMove){
+			if(!game.getMap().checkCollision(collisionCheckRectangle, layer)){
+				playerRectangle.x = collisionCheckRectangle.x;
+				playerRectangle.y = collisionCheckRectangle.y;
+
+			}
 			animatedSprite.update(game);
+
 		}
+		updateCamera(game.getRenderer().getCamera());
 		
 	}
 	
@@ -106,7 +122,13 @@ public class Player implements GameObject{
 	@Override
 	public int getLayer() {
 		// TODO Auto-generated method stub
-		return 0;
+		return layer;
+	}
+
+	@Override
+	public Rectangle getRectangle() {
+		// TODO Auto-generated method stub
+		return playerRectangle;
 	}
 
 }

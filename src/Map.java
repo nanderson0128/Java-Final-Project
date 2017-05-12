@@ -117,9 +117,32 @@ public class Map {
 	
 	
 	
+	public MappedTile getTile(int layer, int tileX, int tileY){
+		
+		int blockX = (tileX - blockStartX) / blockWidth;
+		int blockY = (tileY - blockStartY) / blockHeight;
+		
+		if(blockX < 0 || blockX >= blocks.length || blockY < 0 || blockY >= blocks[0].length){
+			return null;
+		}
+		
+		
+		
+		Block block = blocks[blockX][blockY];
+		
+		if(block == null){		
+			return null;
+		}
+			return block.getTile(layer, tileX, tileY);
+	
+		
+	}
 	
 	
-	
+	public boolean checkCollision(Rectangle rect, int layer){
+		return false;
+		//MappedTile tile = getTile();
+	}
 	
 
 	
@@ -335,6 +358,22 @@ public class Map {
 				if(objects[i].getLayer() == layer){
 					objects[i].render(renderer, xZoom, yZoom);
 				}
+				else if(objects[i].getLayer() + 1 == layer){
+					Rectangle rect = objects[i].getRectangle();
+					
+					int tileBelowX = rect.x / tileWidth;
+					int tileBelowX2 = (int) Math.floor((rect.x + rect.w/2 * xZoom * 1.0) / tileWidth);
+					int tileBelowX3 = (int) Math.floor((rect.x + rect.w * xZoom * 1.0) / tileWidth);
+
+
+					int tileBelowY = (int) Math.floor ((rect.y + rect.h * yZoom * 1.0) / tileHeight);					
+					
+
+					if(getTile(layer, tileBelowX, tileBelowY) == null && getTile(layer, tileBelowX2, tileBelowY) == null && getTile(layer, tileBelowX3, tileBelowY) == null){
+						objects[i].render(renderer, xZoom, yZoom);
+					}
+					
+				}
 			}
 			
 		}
@@ -343,39 +382,11 @@ public class Map {
 			if(objects[i].getLayer() == Integer.MAX_VALUE){
 				objects[i].render(renderer, xZoom, yZoom);
 			}
-		}
-		
-//		for (int tileIndex = 0; tileIndex < mappedTiles.size(); tileIndex++) {
-//			MappedTile mappedTile = mappedTiles.get(tileIndex);
-//			tileSet.renderTile(mappedTile.id, renderer, mappedTile.x * tileWidth, mappedTile.y * tileHeight, xZoom, yZoom);
-//			
-//		}
+		}	
 	}
 	
-	
-//	public void render(RenderHandler renderer, int xZoom, int yZoom){
-//		int tileWidth = 16 * xZoom;
-//		int tileHeight = 16 * yZoom;
-//		
-//		if(fillTileID >= 0){
-//			
-//			Rectangle camera = renderer.getCamera();
-//			
-//			for (int y = camera.y - tileHeight - (camera.y % tileHeight); y < camera.y + camera.h; y+= tileHeight) {
-//				for (int x = camera.x - tileWidth - (camera.x % tileWidth); x < camera.x + camera.w; x+= tileWidth) {
-//					tileSet.renderTile(fillTileID, renderer, x, y, xZoom, yZoom);
-//				}
-//			}
-//		}
-//		
-//		for (int tileIndex = 0; tileIndex < mappedTiles.size(); tileIndex++) {
-//			MappedTile mappedTile = mappedTiles.get(tileIndex);
-//			tileSet.renderTile(mappedTile.id, renderer, mappedTile.x * tileWidth, mappedTile.y * tileHeight, xZoom, yZoom);
-//			
-//		}
-//	}
-	
 	//Block represents a 6x6 block of tiles
+	@SuppressWarnings("unchecked")
 	private class Block {
 		public ArrayList<MappedTile>[] mappedTilesByLayer;
 		
@@ -421,6 +432,16 @@ public class Map {
 		
 		public void removeTile(MappedTile tile){
 			mappedTilesByLayer[tile.layer].remove(tile);
+		}
+		
+		public MappedTile getTile(int layer, int tileX, int tileY){
+			for (MappedTile tile : mappedTilesByLayer[layer]) {
+				if(tile.x == tileX && tile.y == tileY){
+					return tile;
+				}
+				
+			}
+			return null;
 		}
 		
 	}

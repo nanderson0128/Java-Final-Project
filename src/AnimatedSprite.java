@@ -102,4 +102,10 @@ public class AnimatedSprite extends Sprite implements GameObject{
 		return -1;
 	}
 
+	@Override
+	public Rectangle getRectangle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -14,6 +14,10 @@ public interface GameObject {
 
 
 	public int getLayer();
+	
+	
+	
+	public Rectangle getRectangle();
 
 
 

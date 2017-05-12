@@ -1,3 +1,5 @@
+//TileName-SpriteX-SpriteY-CollisionType
+//If there is no CollisionType argument, that tile has no collision
 Grass1-0-1
 Grass2-0-2
 Dirt-2-1

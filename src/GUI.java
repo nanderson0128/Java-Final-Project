@@ -75,4 +75,10 @@ public class GUI implements GameObject{
 		// TODO Auto-generated method stub
 		return Integer.MAX_VALUE;
 	}
+
+	@Override
+	public Rectangle getRectangle() {
+		// TODO Auto-generated method stub
+		return rect;
+	}
 }

@@ -24,7 +24,15 @@ public class Tiles
 					String tileName = splitString[0];
 					int spriteX = Integer.parseInt(splitString[1]);
 					int spriteY = Integer.parseInt(splitString[2]);
+					
+					
+					
 					Tile tile = new Tile(tileName, spriteSheet.getSprite(spriteX, spriteY));
+					if(splitString.length >= 4 ){
+						tile.collidable = true;
+						tile.collisionType = Integer.parseInt(splitString[3]);
+					}
+					
 					tilesList.add(tile);
 				}
 			}
@@ -65,6 +73,8 @@ public class Tiles
 	{
 		public String tileName;
 		public Sprite sprite;
+		public Boolean collidable = false;
+		public int collisionType = -1;
 
 		public Tile(String tileName, Sprite sprite) 
 		{

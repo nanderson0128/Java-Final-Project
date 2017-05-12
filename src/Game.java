@@ -209,9 +209,7 @@ public class Game extends JFrame implements Runnable{
 		super.paint(graphics);
 		
 		map.render(renderer, objects, xZoom, yZoom);
-//		for (int i = 0; i < objects.length; i++) {
-//			objects[i].render(renderer, xZoom, yZoom);
-//		}
+
 
 		renderer.render(graphics);
 
@@ -221,6 +219,7 @@ public class Game extends JFrame implements Runnable{
 		renderer.clear();
 		
 	}
+	
 	
 	public void changeTile(int tileID){
 		selectedTileID = tileID;
@@ -263,5 +262,9 @@ public class Game extends JFrame implements Runnable{
 	
 	public RenderHandler getRenderer(){
 		return renderer;
+	}
+	
+	public Map getMap(){
+		return map;
 	}
 }
