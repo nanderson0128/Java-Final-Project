@@ -11,7 +11,7 @@ public class KeyboardListener implements KeyListener, FocusListener{
 	private Game game;
 
 	private int[] mostRecentKey;
-
+	private boolean spacePressed = false;
 	
 	public KeyboardListener(Game game){
 		this.game = game;
@@ -31,6 +31,9 @@ public class KeyboardListener implements KeyListener, FocusListener{
 		}
 		
 		
+		if(event.getKeyCode() == 32){
+			spacePressed = true;
+		}
 		
 		if(keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]){
 			if(mostRecentKey[0] == 0){
@@ -121,9 +124,11 @@ public class KeyboardListener implements KeyListener, FocusListener{
 	public void keyReleased(KeyEvent event) {
 		// TODO Auto-generated method stub
 		int keyCode = event.getKeyCode();
+
 		if(keyCode < keys.length){
 			keys[keyCode] = false;
 		}
+
 		
 		
 		if(event.getKeyCode() == 68 || event.getKeyCode() == 39){
@@ -225,6 +230,9 @@ public class KeyboardListener implements KeyListener, FocusListener{
 	
 	public int[] getRecentKey(){
 		return mostRecentKey;
+	}
+	public boolean getSpacePress(){
+		return spacePressed;
 	}
 
 }

@@ -69,6 +69,20 @@ public class Tiles
 		return sprites;
 	}
 	
+	public int collisionType(int tileID){
+		if(tileID >= 0 && tilesList.size() > tileID)
+		{
+			return tilesList.get(tileID).collisionType;
+		}
+		else
+		{
+			System.out.println("TileID " + tileID + " is not within range " + tilesList.size() + ".");
+		}
+		return -1;
+	}
+	
+	
+	
 	class Tile 
 	{
 		public String tileName;

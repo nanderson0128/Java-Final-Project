@@ -31,7 +31,7 @@ public class Game extends JFrame implements Runnable{
 	private SpriteSheet playerSheet;
 	
 	private int selectedTileID = 2;	
-	private int selectedLayer = 1;
+	private int selectedLayer = 0;
 	
 	private Rectangle testRectangle = new Rectangle(30, 30, 100, 100);
 	
@@ -91,7 +91,7 @@ public class Game extends JFrame implements Runnable{
 		
 		//Load Objects
 		objects = new GameObject[2];
-		player = new Player(playerAnimations);
+		player = new Player(playerAnimations, xZoom, yZoom);
 		objects[0] = player;
 		objects[1] = gui;
 		
@@ -267,4 +267,12 @@ public class Game extends JFrame implements Runnable{
 	public Map getMap(){
 		return map;
 	}
+	public int getXZoom(){
+		return xZoom;
+	}
+	public int getYZoom(){
+		return yZoom;
+	}
+	
+	
 }

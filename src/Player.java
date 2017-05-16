@@ -12,10 +12,12 @@ public class Player implements GameObject{
 	
 	private Sprite sprite;
 	private AnimatedSprite animatedSprite = null;
+	private final int xCollisionOffset = 11;
+	private final int yCollisionOffset = 64;
 	private int[] mostRecentKey = new int[4];
 
 	
-	public Player(Sprite sprite){
+	public Player(Sprite sprite, int xZoom, int yZoom){
 		this.sprite = sprite;
 		if(sprite != null && sprite instanceof AnimatedSprite){
 			animatedSprite = (AnimatedSprite) sprite;
@@ -24,7 +26,7 @@ public class Player implements GameObject{
 		updateDirection();
 		playerRectangle = new Rectangle(0, 0, 20, 26);
 		playerRectangle.generateGraphics(3, 0xFF00FF90);
-		collisionCheckRectangle = new Rectangle(0, 0, 20, 26);
+		collisionCheckRectangle = new Rectangle(0, 0, 12 * xZoom, 1 * yZoom);
 	}
 	
 	
@@ -99,9 +101,13 @@ public class Player implements GameObject{
 
 		
 		if(didMove){
-			if(!game.getMap().checkCollision(collisionCheckRectangle, layer)){
-				playerRectangle.x = collisionCheckRectangle.x;
-				playerRectangle.y = collisionCheckRectangle.y;
+			collisionCheckRectangle.x += xCollisionOffset;
+			collisionCheckRectangle.y += yCollisionOffset;
+			if(!game.getMap().checkCollision(collisionCheckRectangle, layer, game.getXZoom(), game.getYZoom()) && 
+					!game.getMap().checkCollision(collisionCheckRectangle, layer + 1, game.getXZoom(), game.getYZoom())){
+				
+				playerRectangle.x = collisionCheckRectangle.x -  xCollisionOffset;
+				playerRectangle.y = collisionCheckRectangle.y - yCollisionOffset;
 
 			}
 			animatedSprite.update(game);

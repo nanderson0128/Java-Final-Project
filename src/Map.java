@@ -13,6 +13,8 @@ public class Map {
 	
 	private ArrayList<MappedTile> mappedTiles = new ArrayList<MappedTile>();
 	private Block [][] blocks;
+	
+	private String[] chestItems = new String[6];
 	private int blockStartX, blockStartY = 0;
 	private int blockWidth = 6;
 	private int blockHeight = 6;
@@ -138,13 +140,54 @@ public class Map {
 		
 	}
 	
-	
-	public boolean checkCollision(Rectangle rect, int layer){
+	public boolean checkCollision(Rectangle rect, int layer, int xZoom, int yZoom){
+		int tileWidth = 16 * xZoom;
+		int tileHeight = 16 * yZoom;
+		
+		//Coordinates to check all tiles in a radius on 4 around the player.
+		int topLeftX = (rect.x - 64)/tileWidth;
+		int topLeftY = (rect.y - 64)/tileHeight;
+		int bottomRightX = (rect.x + rect.w + 64)/tileWidth;
+		int bottomRightY = (rect.y + rect.h + 64)/tileHeight;
+		
+		
+		//Starting at the top left tile and going to the bottom right.
+		for (int x = topLeftX; x < bottomRightX; x++) {
+			for (int y = topLeftY; y < bottomRightY; y++) {
+				MappedTile tile = getTile(layer, x, y);
+				if(tile != null){
+					int collisionType = tileSet.collisionType(tile.id);
+					if(collisionType == 0){
+						Rectangle tileRectangle = new Rectangle(tile.x * tileWidth, tile.y * tileHeight, tileWidth, tileHeight);
+						if(tileRectangle.intersects(rect)){
+							return true;
+						}
+					}
+					else if(collisionType == 1){
+						return false;
+					}
+					else if(collisionType == 2){
+						return false;
+					}
+					else if(collisionType == 3){
+						Rectangle tileRectangle = new Rectangle(tile.x * tileWidth, tile.y * tileHeight + tileHeight - 16, tileWidth, 1);
+						Rectangle adjustedRect = new Rectangle(rect.x, rect.y + rect.h, rect.w,1);
+						if(tileRectangle.intersects(rect)){
+							return true;
+						}
+					}
+					else if(collisionType == 4){
+						return false;
+					}
+				}
+			}
+		}
 		return false;
-		//MappedTile tile = getTile();
 	}
 	
-
+	public void openChest(){
+		
+	}
 	
 	public void setTile(int layer, int tileX, int tileY, int tileID){
 		
