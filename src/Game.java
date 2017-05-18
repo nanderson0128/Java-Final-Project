@@ -17,7 +17,7 @@ public class Game extends JFrame implements Runnable{
 	public static final int alpha = 0xFFFF00FF;
 	private int FPS = 60;
 	
-	private Canvas canvas = new Canvas();
+	 private Canvas canvas = new Canvas();
 	private RenderHandler renderer;
 	
 	BufferedImage sheetImage = loadImage("spritesheet.png");
