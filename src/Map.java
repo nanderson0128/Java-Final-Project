@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-
+ 
 public class Map {
 	private Tiles tileSet;
 	private int fillTileID = -1;
