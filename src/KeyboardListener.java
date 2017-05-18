@@ -9,7 +9,7 @@ public class KeyboardListener implements KeyListener, FocusListener{
 	public boolean[] keys = new boolean[120];
 	public String[] chestItems = {"Sword.1", "Sword.2", "Sword.3", "Sword.4", "Sword.5", "Sword.6", };
 	
-	public boolean nextToChest = false;
+	public static boolean nextToChest = false;
 	private Game game;
 
 

@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.io.File;
 public class Game extends JFrame implements Runnable{
 	
+	private KeyboardListener keyListener = new KeyboardListener(this);
+	private MouseEventListener mouseListener = new MouseEventListener(this);
+	
 	public static final int alpha = 0xFFFF00DC;
 	private int FPS = 60;
 	
@@ -36,8 +39,6 @@ public class Game extends JFrame implements Runnable{
 	private Rectangle testRectangle = new Rectangle(30, 30, 100, 100);
 	
 	private GameObject[] objects;
-	private KeyboardListener keyListener = new KeyboardListener(this); 
-	private MouseEventListener mouseListener = new MouseEventListener(this);
 	
 	private Player player;
 	
@@ -45,6 +46,7 @@ public class Game extends JFrame implements Runnable{
 	private int yZoom = 3;
 	
 	public Game(){
+		
 		//When you close window, it stops program
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//Sets position

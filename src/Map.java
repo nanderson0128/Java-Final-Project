@@ -13,9 +13,6 @@ public class Map {
 	
 	private ArrayList<MappedTile> mappedTiles = new ArrayList<MappedTile>();
 	private Block [][] blocks;
-	private boolean test = false;
-	
-	private KeyboardListener keyListener;
 	private int blockStartX, blockStartY = 0;
 	private int blockWidth = 6;
 	private int blockHeight = 6;
@@ -172,7 +169,6 @@ public class Map {
 					}
 					else if(collisionType == 3){
 						Rectangle tileRectangle = new Rectangle(tile.x * tileWidth, tile.y * tileHeight + tileHeight - 16, tileWidth, 1);
-						Rectangle adjustedRect = new Rectangle(rect.x, rect.y + rect.h, rect.w,1);
 						if(tileRectangle.intersects(rect)){
 							return true;
 						}
@@ -181,9 +177,11 @@ public class Map {
 						return false;
 					}
 					String tileName = tileSet.checkSurroundingTiles(tile.id);
-					System.out.println(tileName);
+
+					
 					if(tileName.equals("Chest")){
-						keyListener.nextToChest = true;
+						
+						KeyboardListener.nextToChest = true;
 					}
 				}
 			}
