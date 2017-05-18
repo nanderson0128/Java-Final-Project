@@ -35,11 +35,12 @@ public class SDKButton extends GUIButton{
 		
 		renderer.renderRectangle(rect, interfaceRect, 1, 1, fixed);
 		renderer.renderSprite(sprite, rect.x + interfaceRect.x + (xZoom - (xZoom - 1)) * rect.w/2/xZoom, rect.y + interfaceRect.y + (yZoom - (yZoom - 1)) * rect.h/2/yZoom, xZoom - 1, yZoom - 1, fixed);
+
 	}
 	
 	public void activate()
 	{
-		game.changeTile(tileID);;
+		game.changeTile(tileID);
 	}
 
 

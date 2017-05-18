@@ -37,6 +37,9 @@ public class GUI implements GameObject{
 				buttons[i].render(renderer, xZoom, yZoom, rect);
 			}
 		}
+//		while(KeyboardListener.chestOpened){
+//			renderer
+//		}
 	}
 
 	@Override

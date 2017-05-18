@@ -11,7 +11,7 @@ public class KeyboardListener implements KeyListener, FocusListener{
 	
 	public static boolean nextToChest = false;
 	private Game game;
-
+	public static boolean chestOpened = false;
 
 	private int[] mostRecentKey;
 
@@ -34,10 +34,11 @@ public class KeyboardListener implements KeyListener, FocusListener{
 			game.handleCTRL(keys);
 		}
 		
-		
+
 		if(event.getKeyCode() == 32 && nextToChest){
 			double RNG = Math.random() * 6;
 			System.out.println(chestItems[(int)(RNG)]);
+			chestOpened = true;
 		}
 		
 		if(keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]){

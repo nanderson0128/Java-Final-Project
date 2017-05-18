@@ -103,8 +103,8 @@ public class Player implements GameObject{
 		if(didMove){
 			collisionCheckRectangle.x += xCollisionOffset;
 			collisionCheckRectangle.y += yCollisionOffset;
-			if(!game.getMap().checkCollision(collisionCheckRectangle, layer, game.getXZoom(), game.getYZoom()) && 
-					!game.getMap().checkCollision(collisionCheckRectangle, layer + 1, game.getXZoom(), game.getYZoom())){
+			if(!game.getMap().checkSurroundingTiles(collisionCheckRectangle, layer, game.getXZoom(), game.getYZoom()) && 
+					!game.getMap().checkSurroundingTiles(collisionCheckRectangle, layer + 1, game.getXZoom(), game.getYZoom())){
 				
 				playerRectangle.x = collisionCheckRectangle.x -  xCollisionOffset;
 				playerRectangle.y = collisionCheckRectangle.y - yCollisionOffset;

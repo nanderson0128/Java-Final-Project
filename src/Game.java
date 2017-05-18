@@ -17,7 +17,7 @@ public class Game extends JFrame implements Runnable{
 	private KeyboardListener keyListener = new KeyboardListener(this);
 	private MouseEventListener mouseListener = new MouseEventListener(this);
 	
-	public static final int alpha = 0xFFFF00DC;
+	public static final int alpha = 0xFFFF00FF ;
 	private int FPS = 60;
 	
 	private Canvas canvas = new Canvas();
@@ -50,7 +50,7 @@ public class Game extends JFrame implements Runnable{
 		//When you close window, it stops program
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//Sets position
-		setBounds(0, 0, 1280, 960);
+		setBounds(0, 0, 640, 640);
 		//Puts frame in the center of screen
 		setLocationRelativeTo(null);
 		//Adds graphics
@@ -65,6 +65,7 @@ public class Game extends JFrame implements Runnable{
 		sheet.loadSprites(16, 16);
 		
 		BufferedImage playerSheetImage = loadImage("player.png");
+		BufferedImage inventoryImage = loadImage("Inventory.png");
 		playerSheet = new SpriteSheet(playerSheetImage);
 		playerSheet.loadSprites(20, 26);
 		
@@ -275,6 +276,6 @@ public class Game extends JFrame implements Runnable{
 	public int getYZoom(){
 		return yZoom;
 	}
-	
+
 	
 }

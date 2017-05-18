@@ -138,7 +138,7 @@ public class Map {
 		
 	}
 	
-	public boolean checkCollision(Rectangle rect, int layer, int xZoom, int yZoom){
+	public boolean checkSurroundingTiles(Rectangle rect, int layer, int xZoom, int yZoom){
 		int tileWidth = 16 * xZoom;
 		int tileHeight = 16 * yZoom;
 		
@@ -148,7 +148,7 @@ public class Map {
 		int bottomRightX = (rect.x + rect.w + 64)/tileWidth;
 		int bottomRightY = (rect.y + rect.h + 64)/tileHeight;
 		
-		
+
 		//Starting at the top left tile and going to the bottom right.
 		for (int x = topLeftX; x < bottomRightX; x++) {
 			for (int y = topLeftY; y < bottomRightY; y++) {
@@ -177,10 +177,10 @@ public class Map {
 						return false;
 					}
 					String tileName = tileSet.checkSurroundingTiles(tile.id);
-
-					
-					if(tileName.equals("Chest")){
-						
+					if(!tileName.equals("Chest")){
+						KeyboardListener.nextToChest = false;
+					}
+					else{
 						KeyboardListener.nextToChest = true;
 					}
 				}
@@ -188,7 +188,7 @@ public class Map {
 		}
 		return false;
 	}
-	
+	   
 	
 	public void setTile(int layer, int tileX, int tileY, int tileID){
 		

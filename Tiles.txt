@@ -11,3 +11,9 @@ Water2-4-4-0
 TreeTop-5-3
 TreeBottom-5-4-3
 Chest-6-2-0
+Roof1-0-0
+Roof2-1-0
+Roof3-2-0
+Roof4-3-0
+Roof5-4-0
+Roof6-5-0
