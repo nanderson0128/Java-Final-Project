@@ -81,6 +81,15 @@ public class Tiles
 		return -1;
 	}
 	
+	public String checkSurroundingTiles(int tileID){
+		if(tileID >= 0 && tilesList.size() > tileID){
+			return tilesList.get(tileID).tileName;
+		}
+		else{
+			System.out.println("TileID " + tileID + " is not within range " + tilesList.size() + ".");
+		}
+		return "";
+	}
 	
 	
 	class Tile 

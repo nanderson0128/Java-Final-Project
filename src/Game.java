@@ -14,10 +14,10 @@ import java.io.IOException;
 import java.io.File;
 public class Game extends JFrame implements Runnable{
 	
-	public static final int alpha = 0xFFFF00FF;
+	public static final int alpha = 0xFFFF00DC;
 	private int FPS = 60;
 	
-	 private Canvas canvas = new Canvas();
+	private Canvas canvas = new Canvas();
 	private RenderHandler renderer;
 	
 	BufferedImage sheetImage = loadImage("spritesheet.png");

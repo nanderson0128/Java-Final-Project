@@ -13,8 +13,9 @@ public class Map {
 	
 	private ArrayList<MappedTile> mappedTiles = new ArrayList<MappedTile>();
 	private Block [][] blocks;
+	private boolean test = false;
 	
-	private String[] chestItems = new String[6];
+	private KeyboardListener keyListener;
 	private int blockStartX, blockStartY = 0;
 	private int blockWidth = 6;
 	private int blockHeight = 6;
@@ -179,15 +180,17 @@ public class Map {
 					else if(collisionType == 4){
 						return false;
 					}
+					String tileName = tileSet.checkSurroundingTiles(tile.id);
+					System.out.println(tileName);
+					if(tileName.equals("Chest")){
+						keyListener.nextToChest = true;
+					}
 				}
 			}
 		}
 		return false;
 	}
 	
-	public void openChest(){
-		
-	}
 	
 	public void setTile(int layer, int tileX, int tileY, int tileID){
 		

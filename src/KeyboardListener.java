@@ -7,11 +7,14 @@ import java.awt.event.FocusEvent;
 public class KeyboardListener implements KeyListener, FocusListener{
 
 	public boolean[] keys = new boolean[120];
+	public String[] chestItems = {"Sword.1", "Sword.2", "Sword.3", "Sword.4", "Sword.5", "Sword.6", };
 	
+	public boolean nextToChest = false;
 	private Game game;
 
+
 	private int[] mostRecentKey;
-	private boolean spacePressed = false;
+
 	
 	public KeyboardListener(Game game){
 		this.game = game;
@@ -20,6 +23,7 @@ public class KeyboardListener implements KeyListener, FocusListener{
 	@Override
 	public void keyPressed(KeyEvent event) {
 		// TODO Auto-generated method stub
+		
 		int keyCode = event.getKeyCode();
 		mostRecentKey = new int[4];
 		if(keyCode < keys.length){
@@ -31,8 +35,9 @@ public class KeyboardListener implements KeyListener, FocusListener{
 		}
 		
 		
-		if(event.getKeyCode() == 32){
-			spacePressed = true;
+		if(event.getKeyCode() == 32 && nextToChest){
+			double RNG = Math.random() * 6;
+			System.out.println(chestItems[(int)(RNG)]);
 		}
 		
 		if(keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]){
@@ -232,7 +237,7 @@ public class KeyboardListener implements KeyListener, FocusListener{
 		return mostRecentKey;
 	}
 	public boolean getSpacePress(){
-		return spacePressed;
+		return nextToChest;
 	}
 
 }

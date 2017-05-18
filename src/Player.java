@@ -2,7 +2,7 @@
 public class Player implements GameObject{
 
 	private Rectangle playerRectangle;
-	private Rectangle collisionCheckRectangle;
+	public Rectangle collisionCheckRectangle;
 	
 	private int speed = 8;
 
