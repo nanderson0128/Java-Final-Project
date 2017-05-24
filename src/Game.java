@@ -50,7 +50,7 @@ public class Game extends JFrame implements Runnable{
 		//When you close window, it stops program
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//Sets position
-		setBounds(0, 0, 640, 640);
+		setBounds(0, 0, 1080, 960);
 		//Puts frame in the center of screen
 		setLocationRelativeTo(null);
 		//Adds graphics

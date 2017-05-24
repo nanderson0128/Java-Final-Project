@@ -1,3 +1,4 @@
+import Map.MappedTile;
 
 public class Player implements GameObject{
 
@@ -9,12 +10,13 @@ public class Player implements GameObject{
 	//0 = Right, 1 = Left, 2 = Up, 3 = Down
 	private int direction = 0;
 	private int layer = 0;
-	
+	private Tiles tile;
 	private Sprite sprite;
 	private AnimatedSprite animatedSprite = null;
 	private final int xCollisionOffset = 11;
 	private final int yCollisionOffset = 64;
 	private int[] mostRecentKey = new int[4];
+
 
 	
 	public Player(Sprite sprite, int xZoom, int yZoom){
@@ -108,7 +110,6 @@ public class Player implements GameObject{
 				
 				playerRectangle.x = collisionCheckRectangle.x -  xCollisionOffset;
 				playerRectangle.y = collisionCheckRectangle.y - yCollisionOffset;
-
 			}
 			animatedSprite.update(game);
 
@@ -135,6 +136,9 @@ public class Player implements GameObject{
 	public Rectangle getRectangle() {
 		// TODO Auto-generated method stub
 		return playerRectangle;
+	}
+	public Rectangle getCollisionRect(){
+		return collisionCheckRectangle;
 	}
 
 }

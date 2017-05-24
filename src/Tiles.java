@@ -81,7 +81,7 @@ public class Tiles
 		return -1;
 	}
 	
-	public String checkSurroundingTiles(int tileID){
+	public String surroundingTiles(int tileID){
 		if(tileID >= 0 && tilesList.size() > tileID){
 			return tilesList.get(tileID).tileName;
 		}

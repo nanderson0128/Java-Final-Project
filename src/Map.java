@@ -24,6 +24,8 @@ public class Map {
 	
 	private int numLayers;
 	
+	private Player player;
+	
 	
 	public Map(File mapFile, Tiles tileSet){
 	this.tileSet = tileSet;
@@ -175,13 +177,6 @@ public class Map {
 					}
 					else if(collisionType == 4){
 						return false;
-					}
-					String tileName = tileSet.checkSurroundingTiles(tile.id);
-					if(!tileName.equals("Chest")){
-						KeyboardListener.nextToChest = false;
-					}
-					else{
-						KeyboardListener.nextToChest = true;
 					}
 				}
 			}
@@ -489,11 +484,14 @@ public class Map {
 		}
 		
 	}
+	public Tiles getTileSet(){
+		return tileSet;
+	}
 	
 	
 	
 	//TileID in the tileSet and the position of the tile in the map
-	private class MappedTile{
+	public class MappedTile{
 		public int layer, id, x, y;
 		
 		public MappedTile(int layer, int id, int x, int y){
