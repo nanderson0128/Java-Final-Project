@@ -5,7 +5,7 @@ public class GUI implements GameObject{
 	private GUIButton[] buttons;
 	private Rectangle rect = new Rectangle();
 	private boolean fixed;
-	
+	private Game game;
 	public GUI(Sprite backgroundSprite, GUIButton[] buttons, int x, int y, boolean fixed){
 		this.backgroundSprite = backgroundSprite;
 		this.buttons = buttons;
@@ -29,6 +29,9 @@ public class GUI implements GameObject{
 	@Override
 	public void render(RenderHandler renderer, int xZoom, int yZoom) {
 		// TODO Auto-generated method stub
+		while(KeyboardListener.chestOpened){
+			game.getInvImage().createGraphics();
+		}
 		if(backgroundSprite != null){
 			renderer.renderSprite(backgroundSprite, rect.x, rect.y, xZoom, yZoom, fixed );
 		}
@@ -37,9 +40,6 @@ public class GUI implements GameObject{
 				buttons[i].render(renderer, xZoom, yZoom, rect);
 			}
 		}
-//		while(KeyboardListener.chestOpened){
-//			renderer
-//		}
 	}
 
 	@Override

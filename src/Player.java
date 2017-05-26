@@ -1,4 +1,4 @@
-import Map.MappedTile;
+
 
 public class Player implements GameObject{
 

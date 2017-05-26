@@ -151,7 +151,7 @@ public class Map {
 		int bottomRightY = (rect.y + rect.h + 64)/tileHeight;
 		
 
-		//Starting at the top left tile and going to the bottom right.
+		//Starting at the top left tile and going to the bottom right.        
 		for (int x = topLeftX; x < bottomRightX; x++) {
 			for (int y = topLeftY; y < bottomRightY; y++) {
 				MappedTile tile = getTile(layer, x, y);

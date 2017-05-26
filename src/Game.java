@@ -25,6 +25,8 @@ public class Game extends JFrame implements Runnable{
 	
 	BufferedImage sheetImage = loadImage("spritesheet.png");
 	//BufferedImage sheetImage = loadImage("tiles16x16.png");
+	BufferedImage playerSheetImage = loadImage("player.png");
+	BufferedImage inventoryImage = loadImage("Inventory.png");
 	
 	
 	private Tiles tile;
@@ -64,8 +66,7 @@ public class Game extends JFrame implements Runnable{
 		sheet = new SpriteSheet(sheetImage);
 		sheet.loadSprites(16, 16);
 		
-		BufferedImage playerSheetImage = loadImage("player.png");
-		BufferedImage inventoryImage = loadImage("Inventory.png");
+
 		playerSheet = new SpriteSheet(playerSheetImage);
 		playerSheet.loadSprites(20, 26);
 		
@@ -265,6 +266,9 @@ public class Game extends JFrame implements Runnable{
 	
 	public RenderHandler getRenderer(){
 		return renderer;
+	}
+	public BufferedImage getInvImage(){
+		return inventoryImage;
 	}
 	
 	public Map getMap(){
