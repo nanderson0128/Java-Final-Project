@@ -51,7 +51,7 @@ public class Tiles
 		}
 		else
 		{
-			System.out.println("TileID " + tileID + " is not within range " + tilesList.size() + ".");
+			System.out.println("Rendered TileID " + tileID + " is not within range " + tilesList.size() + ".");
 		}
 	}
 
@@ -76,7 +76,7 @@ public class Tiles
 		}
 		else
 		{
-			System.out.println("TileID " + tileID + " is not within range " + tilesList.size() + ".");
+			System.out.println("Collided TileID " + tileID + " is not within range " + tilesList.size() + ".");
 		}
 		return -1;
 	}
@@ -86,7 +86,7 @@ public class Tiles
 			return tilesList.get(tileID).tileName;
 		}
 		else{
-			System.out.println("TileID " + tileID + " is not within range " + tilesList.size() + ".");
+			System.out.println("Surrounding TileID " + tileID + " is not within range " + tilesList.size() + ".");
 		}
 		return "";
 	}

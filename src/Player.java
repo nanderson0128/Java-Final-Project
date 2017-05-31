@@ -89,7 +89,6 @@ public class Player implements GameObject{
 			newDirection = 3;
 			didMove = true;
 		}
-		//System.out.println(mostRecentKey);
 		
 		if(newDirection != direction){
 			direction = newDirection;
@@ -106,8 +105,7 @@ public class Player implements GameObject{
 			collisionCheckRectangle.x += xCollisionOffset;
 			collisionCheckRectangle.y += yCollisionOffset;
 			if(!game.getMap().checkSurroundingTiles(collisionCheckRectangle, layer, game.getXZoom(), game.getYZoom()) && 
-					!game.getMap().checkSurroundingTiles(collisionCheckRectangle, layer + 1, game.getXZoom(), game.getYZoom())){
-				
+			   !game.getMap().checkSurroundingTiles(collisionCheckRectangle, layer + 1, game.getXZoom(), game.getYZoom())){
 				playerRectangle.x = collisionCheckRectangle.x -  xCollisionOffset;
 				playerRectangle.y = collisionCheckRectangle.y - yCollisionOffset;
 			}

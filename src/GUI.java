@@ -40,6 +40,7 @@ public class GUI implements GameObject{
 				buttons[i].render(renderer, xZoom, yZoom, rect);
 			}
 		}
+		
 	}
 
 	@Override
